@@ -28,7 +28,7 @@ cd grading-area/
 
 # 4. Test it
 # Find the method: We use grep to find the exact word.
-search1=`grep "static List<String> filter(List<String> s, StringChecker sc)" ListExamples.java`
+search1=`grep "static List<String> filter(List<String> list, StringChecker sc)" ListExamples.java`
 if [[ $? -ne 0 ]] # for arithmetic comparsion instead of != => -ne and == => -eq
 then
     echo 'We cannot find the filter method: You got -80% grade'
@@ -37,12 +37,12 @@ fi
 search2=`grep "static List<String> merge(List<String> list1, List<String> list2)" ListExamples.java`
 if [[ $? -ne 0 ]] # for arithmetic comparsion instead of != => -ne and == => -eq
 then
-    echo 'We cannot find the filter method: You got -80% grade'
+    echo 'We cannot find the merge method: You got -80% grade'
     exit
 fi
 #echo "The result of finding filter is $?"
 
-javac -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" *.java
+javac -cp .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar *.java
 # $? sucess = 0, if it fail = non-0
 if [[ $? -ne 0 ]] # for arithmetic comparsion instead of != => -ne and == => -eq
 then
@@ -50,7 +50,7 @@ then
     exit
 fi
 
-java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar" org.junit.runner.JUnitCore TestListExamples > result.txt
+java -cp .:lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore TestListExamples > result.txt
 call=$?
 echo "Check java complie:" $call # 0 = pass and 1 = fail
 
